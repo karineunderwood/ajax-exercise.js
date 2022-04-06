@@ -26,7 +26,19 @@ function showWeather(evt) {
   const zipcode = document.querySelector('#zipcode-field').value;
 
   // TODO: request weather with that URL and show the forecast in #weather-info
-}
+  // start with fetch('/weather.JSON', {
+  // method: 'POST',
+  // body: JSON.stringify(zipcode),
+  // headers : {
+  // 'Content-Type': 'forecast/json',
+  //}
+  // } )
+//   .then(response => response.json())
+//   .then(responseJson => {
+//     alert(responseJson.status);
+//   });
+// });
+// }
 
 document.querySelector('#weather-form').addEventListener('submit', showWeather);
 
