@@ -9,7 +9,7 @@ function showFortune(evt) {
   //.then(fortuneData => { doc.queryselector(#fortunediv).innerText = fortuneData
 }
   fetch('/fortune')
-    .then(fortune => fortune.json())
+    .then(fortune => fortune.text())
     .then(fortuneData => {
       document.querySelector('#fortune-text').innerText = fortuneData;
     });
@@ -25,20 +25,16 @@ function showWeather(evt) {
   const url = '/weather.json';
   const zipcode = document.querySelector('#zipcode-field').value;
 
-  // TODO: request weather with that URL and show the forecast in #weather-info
-  // start with fetch('/weather.JSON', {
-  // method: 'POST',
-  // body: JSON.stringify(zipcode),
-  // headers : {
-  // 'Content-Type': 'forecast/json',
-  //}
-  // } )
-//   .then(response => response.json())
-//   .then(responseJson => {
-//     alert(responseJson.status);
-//   });
-// });
-// }
+    //fetch uses get method to grab the key value pair of zipcode at the weather.json route
+    fetch(`/weather.json?zipcode=${zipcode}`)
+      //once you fetch the zipcode then turn the response into json
+      .then((response) => response.json())
+      //once you get the zipcode as json then grab the innerhtml at the weather info tag and turn it forecast data
+      .then((jsonData) => {
+        document.querySelector('#weather-info').innerHTML = jsonData.forecast;
+      });
+    }
+
 
 document.querySelector('#weather-form').addEventListener('submit', showWeather);
 
@@ -46,8 +42,22 @@ document.querySelector('#weather-form').addEventListener('submit', showWeather);
 
 function orderMelons(evt) {
   evt.preventDefault();
-
+  // fetch(`/order-melons.json?melon=${melon_type}`)
+    const formInputs = {
+      melon: document.querySelector('#melon-type-field').value,
+      qty: document.querySelector('#qty-field').value,
+    };
+    fetch('/order-melons', {
+      method: 'POST',
+      body: JSON.stringify(formInputs),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => response.json())
+    .then(bob);
+    }
   // TODO: show the result message after your form
   // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
-}
+
 document.querySelector('#order-form').addEventListener('submit', orderMelons);
